@@ -3,3 +3,5 @@ npm-debug.log
 
 *.css
 *.css.map
+
+*.swp
