@@ -21,12 +21,16 @@ onerror(app);
 
 
 const sass = require('koa-sass');
-app.use(sass(path.join(config.staticDir, 'src/sass')));
+app.use(sass({
+    src: path.join(config.staticDir, 'sass'),
+    prefix: '/sass/',
+    force: true,
+    response: true
+}));
 
 
 const staticCache = require('koa-static-cache');
-app.use(staticCache(path.join(config.staticDir, 'dist')));
-app.use(staticCache(path.join(config.staticDir, 'src'), {
+app.use(staticCache(config.staticDir, {
     dynamic: true,
 }));
 
