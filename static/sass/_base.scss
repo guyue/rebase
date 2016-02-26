@@ -1,0 +1,7 @@
+// 所有元素均使用border-box盒模型
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
