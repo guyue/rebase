@@ -41,9 +41,3 @@ body {
     background-color: #fff;
     -webkit-overflow-scrolling: touch;
 }
-
-// Hack to force all relatively and absolutely positioned elements still render while scrolling
-// Note: This is a bug for "-webkit-overflow-scrolling: touch"
-.content > * {
-    @include transform(translateZ(0));
-}
