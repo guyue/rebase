@@ -2,40 +2,37 @@
 // ------------------------------
 
 h1, h2, h3, h4, h5, h6 {
-    margin-top: 0;
-    margin-bottom: 10px;
-    line-height: 1;
+    margin: 0;
+    @include leader(1);
+    @include trailer(1);
 }
 
 h1, .h1 {
-    font-size: 36px;
+    @include adjust-font-size-to($font-size-default * 2.6);
 }
 
 h2, .h2 {
-    font-size: 30px;
+    @include adjust-font-size-to($font-size-default * 2.15);
 }
 
 h3, .h3 {
-    font-size: 24px;
+    @include adjust-font-size-to($font-size-default * 1.7);
 }
 
 h4, .h4 {
-    font-size: 18px;
+    @include adjust-font-size-to($font-size-default * 1.25);
 }
 
 h5, .h5 {
-    margin-top: 20px;
-    font-size: 14px;
+    @include adjust-font-size-to($font-size-default * 1);
 }
 
 h6, .h6 {
-    margin-top: 20px;
-    font-size: 12px;
+    @include adjust-font-size-to($font-size-default * .85);
 }
 
 p {
-    margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 14px;
+    @include leader(1);
+    @include trailer(1);
     color: #777;
 }

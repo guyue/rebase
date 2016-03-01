@@ -5,3 +5,18 @@
     -ms-transform: $transform;
     transform: $transform;
 }
+
+// 排版的垂直韵律
+// ------------------------------
+@mixin adjust-font-size-to($font-size) {
+    font-size: $font-size;
+    line-height: ceil($font-size / $line-height-default) * $line-height-default;
+}
+
+@mixin leader($multiple) {
+    margin-top: $line-height-default * $multiple;
+}
+
+@mixin trailer($multiple) {
+    margin-bottom: $line-height-default * $multiple;
+}
