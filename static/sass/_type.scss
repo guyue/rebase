@@ -35,4 +35,5 @@ p {
     @include leader(1);
     @include trailer(1);
     color: #777;
+    text-align: justify;
 }
