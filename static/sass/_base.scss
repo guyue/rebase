@@ -41,3 +41,9 @@ body {
     background-color: #fff;
     -webkit-overflow-scrolling: touch;
 }
+
+// .content中空余出.bar-nav所需要的空间，保证不被遮挡
+// .content标记必须在.bar-nav之后
+.bar-nav ~ .content {
+    padding-top: $bar-base-height;
+}

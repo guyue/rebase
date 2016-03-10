@@ -1,0 +1,36 @@
+// Bars
+
+.bar {
+    position: fixed;
+    right: 0;
+    left: 0;
+    z-index: 10;
+    height: $bar-base-height;
+    padding-right: $bar-side-spacing;
+    padding-left: $bar-side-spacing;
+    background-color: $chrome-color;
+    border-bottom: $border-default;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+// Nav bar
+.bar-nav {
+    top: 0;
+
+    // 在.bar-nav中居中显示文本
+    // 用absolute定位，以保证文本总是居中显示
+    .title {
+        position: absolute;
+        display: block;
+        width: 100%;
+        padding: 0;
+        margin: 0 (-$bar-side-spacing);
+        font-size: $font-size-default;
+        font-weight: $font-weight;
+        line-height: $bar-base-height;
+        color: #000;
+        text-align: center;
+        white-space: nowrap;
+    }
+}
