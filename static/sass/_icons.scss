@@ -1,0 +1,22 @@
+// icons
+// 参考：
+// [如何把你的图标转换成web字体](http://www.w3cplus.com/css3/how-to-turn-your-icons-into-a-web-font.html)
+// [字体图标制作详解](http://mux.alimama.com/posts/1025)
+// [iconfont](http://www.iconfont.cn/)
+// [使用 SVG 输出 Octicon](http://efe.baidu.com/blog/delivering-octicons-with-svg/)
+// [Web 设计新趋势: 使用 SVG 代替 Web Icon Font](https://io-meter.com/2014/07/20/replace-icon-fonts-with-svg/)
+// [高清ICON SVG解决方案（上）](https://isux.tencent.com/svg-icon-part-one.html)
+// [高清ICON SVG解决方案（下）](https://isux.tencent.com/svg-icon-part-two.html)
+// [使用SVG中的Symbol元素制作Icon](https://isux.tencent.com/16292.html)
+// [SVG应用指南](https://svgontheweb.com/zh/)
+// ------------------------------
+
+.icon {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+
+    path {
+        fill: red;
+    }
+}
