@@ -33,4 +33,23 @@ module.exports = {
             svgs: svgs,
         });
     },
+
+    icons: function *() {
+        this.state.title = 'REBASE';
+
+        let icons = yield getIcons();
+        icons = icons.filter((icon) => {
+            if (!/^\w+(?:-\w+)*\.(?:svg)$/i.test(icon)) {
+                return false;
+            }
+            return true;
+        }).map((icon) => {
+            return icon.split('.')[0];
+        });
+
+        yield this.render('icons', {
+            csrf: this.csrf,
+            icons: icons,
+        });
+    },
 };

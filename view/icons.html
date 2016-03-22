@@ -1,0 +1,43 @@
+<header class="bar bar-nav">
+    <h1 class="title">LinearIcons</h1>
+</header>
+
+<div class="content">
+    <form id="frm-icon-size">
+        <fieldset>
+            <legend>调整Icon大小</legend>
+            <label><input type="radio" value="14" name="icon-size" />小</label>
+            <label><input type="radio" value="21" name="icon-size" checked />中</label>
+            <label><input type="radio" value="42" name="icon-size" />大</label>
+        </fieldset>
+        <fieldset>
+            <legend>调整Icon颜色</legend>
+            <label><input type="radio" value="black" name="icon-color" checked />黑</label>
+            <label><input type="radio" value="red" name="icon-color" />红</label>
+            <label><input type="radio" value="yello" name="icon-color" />黄</label>
+            <label><input type="radio" value="blue" name="icon-color" />蓝</label>
+        </fieldset>
+    </form>
+
+    <% icons.forEach(function (icon) { %>
+        <i class="icon icon-<%= icon %>"></i>
+    <% }); %>
+</div>
+<script>
+(function() {
+    'use strict';
+
+    var form = document.getElementById('frm-icon-size');
+
+    form.addEventListener('change', function () {
+        var icons = [].slice.call(document.querySelectorAll('.icon')),
+            fontSize = this.querySelector('input[type=radio][name=icon-size]:checked').value,
+            iconColor = this.querySelector('input[type=radio][name=icon-color]:checked').value;
+
+        icons.forEach(function (icon) {
+            icon.style.fontSize = fontSize + 'px';
+            icon.style.color = iconColor;
+        });
+    });
+}());
+</script>
