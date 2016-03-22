@@ -3,7 +3,7 @@
 </header>
 
 <div class="content">
-    <% icons.forEach(function (icon) { %>
-        <img src="/sass/icons/<%= icon %>" class="icon" />
+    <% svgs.forEach(function (svg) { %>
+        <object data="/sass/svgs/<%= svg %>" class="icon"></object>
     <% }); %>
 </div>

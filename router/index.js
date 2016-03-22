@@ -3,7 +3,7 @@ const controller = require('../controller/index');
 
 
 router.get('/', controller.index);
-router.get('icons', controller.icons);
+router.get('svgs', controller.svgs);
 
 
 module.exports = router;
