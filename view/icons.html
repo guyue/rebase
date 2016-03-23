@@ -1,27 +1,65 @@
+<style>
+.icon-container {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-align-content: flex-start;
+    -ms-flex-line-pack: start;
+    align-content: flex-start;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+}
+.icon-wrapper {
+    padding: 10px;
+    text-align: center;
+    -webkit-flex: 0 1 auto;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    -webkit-align-self: auto;
+    -ms-flex-item-align: auto;
+    align-self: auto;
+}
+</style>
 <header class="bar bar-nav">
     <h1 class="title">LinearIcons</h1>
 </header>
 
 <div class="content">
-    <form id="frm-icon-size">
-        <fieldset>
-            <legend>调整Icon大小</legend>
-            <label><input type="radio" value="14" name="icon-size" />小</label>
-            <label><input type="radio" value="21" name="icon-size" checked />中</label>
-            <label><input type="radio" value="42" name="icon-size" />大</label>
-        </fieldset>
-        <fieldset>
-            <legend>调整Icon颜色</legend>
-            <label><input type="radio" value="black" name="icon-color" checked />黑</label>
-            <label><input type="radio" value="red" name="icon-color" />红</label>
-            <label><input type="radio" value="yellow" name="icon-color" />黄</label>
-            <label><input type="radio" value="blue" name="icon-color" />蓝</label>
-        </fieldset>
-    </form>
-
-    <% icons.forEach(function (icon) { %>
-        <i class="icon icon-<%= icon %>"></i>
-    <% }); %>
+    <div class="content-padded">
+        <form id="frm-icon-size">
+            <fieldset>
+                <legend>调整Icon大小</legend>
+                <label><input type="radio" value="14" name="icon-size" />小</label>
+                <label><input type="radio" value="21" name="icon-size" checked />中</label>
+                <label><input type="radio" value="42" name="icon-size" />大</label>
+            </fieldset>
+            <fieldset>
+                <legend>调整Icon颜色</legend>
+                <label><input type="radio" value="black" name="icon-color" checked />黑</label>
+                <label><input type="radio" value="red" name="icon-color" />红</label>
+                <label><input type="radio" value="yellow" name="icon-color" />黄</label>
+                <label><input type="radio" value="blue" name="icon-color" />蓝</label>
+            </fieldset>
+        </form>
+ 
+        <div class="icon-container">
+            <% icons.forEach(function (icon) { %>
+                <div class="icon-wrapper">
+                    <i class="icon icon-<%= icon %>"></i>
+                </div>
+            <% }); %>
+        </div>
+    </div>
 </div>
 <script>
 (function() {
