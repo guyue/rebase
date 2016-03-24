@@ -3,9 +3,9 @@
 
 // 参考淘宝和锤子字体设置
 $font-family-default: "Helvetica Neue", Helvetica, "Hiragino Sans GB W3", "Hiragino Sans GB", STHeiti, "STHeiti Light [STXihei]", "Microsoft YaHei", "WenQuanYi Micro Hei", Arial, sans-serif !default;
-$font-size-default: 14px !default;
+$font-size-default: 16px !default;
 $font-weight: 500 !default;
-$line-height-default: 21px !default;
+$line-height-default: $font-size-default * 1.6 !default;
 
 // 颜色
 // ------------------------------
@@ -13,6 +13,7 @@ $line-height-default: 21px !default;
 // 主颜色
 $primary-color: #428bca !default;
 $chrome-color: #fff !default;
+$text-color: #333 !default;
 
 
 // Bars

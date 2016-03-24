@@ -34,6 +34,6 @@ h6, .h6 {
 p {
     @include leader(1);
     @include trailer(1);
-    color: #777;
+    color: $text-color;
     text-align: justify;
 }
