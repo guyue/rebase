@@ -1,0 +1,44 @@
+.badge {
+    display: inline-block;
+    padding: 0 1em;
+    font-size: $badge-font-size;
+    line-height: $line-height-default;
+    color: $text-color;
+    background-color: rgba(0, 0, 0, .15);
+    border-radius: 100px;
+
+    &.badge-inverted {
+        padding-right: .5em;
+        background-color: transparent;
+    }
+}
+
+.badge-primary {
+    color: $default-color;
+    background-color: $primary-color;
+
+    &.badge-inverted {
+        color: $primary-color;
+        background-color: transparent;
+    }
+}
+
+.badge-positive {
+    color: $default-color;
+    background-color: $positive-color;
+
+    &.badge-inverted {
+        color: $positive-color;
+        background-color: transparent;
+    }
+}
+
+.badge-negative {
+    color: $default-color;
+    background-color: $negative-color;
+
+    &.badge-inverted {
+        color: $negative-color;
+        background-color: transparent;
+    }
+}

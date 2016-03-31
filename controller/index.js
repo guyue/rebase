@@ -53,6 +53,14 @@ module.exports = {
         });
     },
 
+    badges: function *() {
+        this.state.title = 'Badges-REBASE';
+
+        yield this.render('badges', {
+            csrf: this.csrf,
+        });
+    },
+
     buttons: function *() {
         this.state.title = 'Buttons-REBASE';
 
