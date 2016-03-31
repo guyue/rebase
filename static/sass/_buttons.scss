@@ -1,7 +1,7 @@
 .btn {
     position: relative;
     display: inline-block;
-    padding: $button-font-size * .5 $button-font-size * .6 $button-font-size * .5 + 1;
+    padding: ($line-height-default - $button-font-size - 3px) / 2 $button-font-size * .5 ($line-height-default - $button-font-size - 3px) / 2 + 1px;
     margin-bottom: 0;   // For input.btn
     font-size: $button-font-size;
     font-weight: $font-weight-light;
@@ -107,9 +107,9 @@
 .btn-block {
     display: block;
     width: 100%;
-    padding: 15px 0;
+    padding: ($line-height-default * 2 - $button-block-font-size - 10px - 2px) / 2 0;
     margin-bottom: 10px;
-    font-size: 18px;
+    font-size: $button-block-font-size;
 }
 
 .btn .icon {
@@ -125,13 +125,16 @@ input[type="button"] {
 
 // Buttons with badgs
 .btn .badge {
-    margin: -2px -4px -2px -4px;
+    padding: ($line-height-default - $badge-font-size -3px) / 4 $badge-font-size;
+    margin: -($line-height-default - $badge-font-size -3px) / 4 0;
     font-size: inherit;
     background-color: rgba(0, 0, 0, .15);
 }
 .btn .badge-inverted,
 .btn:active .badge-inverted,
 .btn.active .badge-inverted {
+    padding-right: 0;
+    padding-left: 0;
     background-color: transparent;
 }
 
