@@ -5,6 +5,7 @@
 $font-family-default: "Helvetica Neue", Helvetica, "Hiragino Sans GB W3", "Hiragino Sans GB", STHeiti, "STHeiti Light [STXihei]", "Microsoft YaHei", "WenQuanYi Micro Hei", Arial, sans-serif !default;
 $font-size-default: 16px !default;
 $font-weight: 500 !default;
+$font-weight-light: 400 !default;
 $line-height-default: $font-size-default * 1.6 !default;
 
 // 颜色
@@ -14,6 +15,11 @@ $line-height-default: $font-size-default * 1.6 !default;
 $primary-color: #428bca !default;
 $chrome-color: #fff !default;
 $text-color: #333 !default;
+
+// Action colors
+$default-color: #fff !default;
+$positive-color: #5cb85c !default;
+$negative-color: #d9534f !default;
 
 
 // Bars
@@ -27,3 +33,6 @@ $border-default: $border-default-width solid #ddd;
 
 // Icons
 $icon-size-default: 21px !default;
+
+// Buttons
+$button-font-size: $font-size-default * .8 !default;

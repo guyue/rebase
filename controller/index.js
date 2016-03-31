@@ -52,4 +52,12 @@ module.exports = {
             icons: icons,
         });
     },
+
+    buttons: function *() {
+        this.state.title = 'Buttons-REBASE';
+
+        yield this.render('buttons', {
+            csrf: this.csrf,
+        });
+    },
 };
