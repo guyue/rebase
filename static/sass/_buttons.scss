@@ -124,3 +124,22 @@ input[type="button"] {
 }
 
 // Buttons with badgs
+.btn .badge {
+    margin: -2px -4px -2px -4px;
+    font-size: inherit;
+    background-color: rgba(0, 0, 0, .15);
+}
+.btn .badge-inverted,
+.btn:active .badge-inverted,
+.btn.active .badge-inverted {
+    background-color: transparent;
+}
+
+.btn-primary:active .badge-inverted,
+.btn-primary.active .badge-inverted,
+.btn-positive:active .badge-inverted,
+.btn-positive.active .badge-inverted,
+.btn-negative:active .badge-inverted,
+.btn-negative.active .badge-inverted {
+    color: $default-color;
+}
