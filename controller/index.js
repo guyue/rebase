@@ -68,4 +68,12 @@ module.exports = {
             csrf: this.csrf,
         });
     },
+
+    forms: function *() {
+        this.state.title = 'Forms-REBASE';
+
+        yield this.render('forms', {
+            csrf: this.csrf,
+        });
+    },
 };
