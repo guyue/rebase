@@ -6,6 +6,11 @@
     transform: $transform;
 }
 
+@mixin box-shadow($shadow...) {
+    -webkit-box-shadow: $shadow;
+    box-shadow: $shadow;
+}
+
 // 排版的垂直韵律
 // ------------------------------
 @mixin adjust-font-size-to($font-size) {
