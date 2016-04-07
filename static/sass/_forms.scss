@@ -64,7 +64,7 @@ select {
 
 
 // Input Groups
-// ====================================
+// ------------------------------------
 .input-group {
     background-color: #fff;
 
@@ -77,5 +77,28 @@ select {
         border-right: 0;
         border-left: 0;
         @include box-shadow(none);
+    }
+
+    // Input Groups with labels
+    .input-row {
+        position: relative;
+        overflow: hidden;
+        border-bottom: $border-default;
+
+        label {
+            float: left;
+            width: 35%;
+            height: 50px;
+            padding: 0 15px;
+            font-family: $font-family-default;
+            line-height: 50px;
+        }
+
+        input {
+            float: right;
+            width: 65%;
+            padding-left: 0;
+            border: 0;
+        }
     }
 }
