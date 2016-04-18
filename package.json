@@ -26,6 +26,9 @@
     "spdy": "^3.2.0"
   },
   "devDependencies": {
-    "normalize.css": "^3.0.3"
+    "normalize.css": "^3.0.3",
+    "jquery": "^2.2.3",
+    "seajs": "^3.0.2",
+    "seajs-text": "github:seajs/seajs-text"
   }
 }
