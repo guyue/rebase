@@ -1,0 +1,25 @@
+//
+// Modals
+// ------------------------------
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 11;
+    width: 100%;
+    min-height: 100%;
+    overflow: hidden;
+    background-color: #fff;
+    opacity: 0;
+    -webkit-transition: -webkit-transform .2s, opacity .2s 1ms;
+    -ms-transition: -ms-transform .2s, opacity .2s 1ms;
+    transition: transform .2s, opacity .2s 1ms;
+    @include transform(translate3d(0, 100%, 0));
+
+    &.active {
+        height: 100%;
+        opacity: 1;
+        @include transform(translate3d(0, 0, 0));
+    }
+}

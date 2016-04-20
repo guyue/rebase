@@ -76,4 +76,12 @@ module.exports = {
             csrf: this.csrf,
         });
     },
+
+    modals: function *() {
+        this.state.title = 'Modals-REBASE';
+
+        yield this.render('modals', {
+            csrf: this.csrf,
+        });
+    },
 };
