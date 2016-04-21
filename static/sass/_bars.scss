@@ -34,3 +34,10 @@
         white-space: nowrap;
     }
 }
+
+.bar-nav {
+    .icon {
+        position: relative;
+        z-index: 20;
+    }
+}
