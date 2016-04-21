@@ -17,4 +17,16 @@ define(function (require, exports, module) {
             return event;
         };
     }());
+
+    exports.query = function query(selector, content) {
+        if (selector instanceof HTMLElement) {
+            return selector;
+        }
+
+        if (!content) {
+            content = document;
+        }
+
+        return content.querySelector(selector);
+    };
 });
