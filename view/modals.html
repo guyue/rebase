@@ -4,10 +4,11 @@
 
 <div class="content">
     <div class="content-padded">
-        <button class="btn">打开模态窗口</button>
+        <button class="btn" data-toggle="modal-open" data-target="#modal-example">打开模态窗口</button>
+        <a class="btn" data-toggle="modal-open" href="#modal-example">打开模态窗口</a>
         <div id="modal-example" class="modal">
             <header class="bar bar-nav">
-                <a class="icon icon-cross pull-right" class="modal-example"></a>
+                <button class="icon icon-cross pull-right" data-toggle="modal-close"></button>
                 <h1 class="title">红莓花儿开</h1>
             </header>
             <div class="content">
@@ -20,3 +21,6 @@
         </div>
     </div>
 </div>
+<script>
+    seajs.use('modals');
+</script>
