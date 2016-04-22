@@ -64,6 +64,8 @@ define(function (require, exports, module) {
         Modal.die();
 
         $(document).on('click.modal', '[data-toggle=modal-open]', function (e) {
+            e.preventDefault();
+
             var model = new Modal(this, {
                 slient: true
             });
