@@ -1,8 +1,8 @@
 define(function (require, exports, module) {
     'use strict';
 
-    var common = require('./common'),
-        $ = require('jquery');
+    var $ = require('jquery'),
+        common = require('./common');
 
     function Modal(element, options) {
         if (!(this instanceof Modal)) {
@@ -11,13 +11,13 @@ define(function (require, exports, module) {
 
         this.element = common.query(element);
 
-        this.target = this.getTarget();
-
         if ($(this.element).data('instance-modal')) {
             return $(this.element).data('instance-modal');
         } else {
             $(this.element).data('instance-modal', this);
         }
+
+        this.target = this.getTarget();
 
         if (!(options && options.slient)) {
             $(this.element).on('click', this.show.bind(this));
@@ -28,7 +28,7 @@ define(function (require, exports, module) {
         constructor: Modal,
 
         getTarget: function () {
-            var target = this.element.dataset['target'];
+            var target = this.element.dataset.target;
             if (!target) {
                 target = this.element.hash;
             }
