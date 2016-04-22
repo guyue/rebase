@@ -2,7 +2,8 @@ define(function (require, exports, module) {
     'use strict';
 
     var $ = require('jquery'),
-        common = require('./common');
+        common = require('./common'),
+        CustomEvent = common.CustomEvent;
 
     function Modal(element, options) {
         if (!(this instanceof Modal)) {
@@ -13,8 +14,10 @@ define(function (require, exports, module) {
             throw new TypeError('element参数应该是HTMLElement元素');
         }
 
-        document.body.appendChild(element);
         this.element = element;
+        $(this.getClose()).on('click.modal', this.close.bind(this));
+
+        document.body.appendChild(element);
     }
 
     Modal.prototype = {
@@ -24,27 +27,55 @@ define(function (require, exports, module) {
             return common.query('[data-toggle=modal-close]', this.element);
         },
 
+        dispatchEvent: function dispatchEvent(type) {
+            var event = new CustomEvent(type, {
+                canBubble: true,
+                cancelable: true
+            });
+            this.element.dispatchEvent(event);
+            return event;
+        },
+
         open: function open() {
-            if (this.element.classList.contains('active')) {
+            if (!this.element || this.element.classList.contains('active')) {
+                return;
+            }
+
+            var openEvent = this.dispatchEvent('open');
+
+            if (openEvent.defaultPrevented) {
                 return;
             }
 
             this.element.classList.add('active');
 
-            $(this.getClose()).one('click.modal', this.close.bind(this));
+            this.dispatchEvent('opened');
         },
 
         close: function close(e) {
+            if (!this.element) {
+                return;
+            }
+
             if (e) {
                 e.preventDefault();
             }
 
+            var closeEvent = this.dispatchEvent('close');
+
+            if (closeEvent.defaultPrevented) {
+                return;
+            }
+
             this.element.classList.remove('active');
+
+            this.dispatchEvent('closed');
         },
 
-        destory: function destroy() {
+        destroy: function destroy() {
             $(this.getClose()).off('click.modal');
             document.body.removeChild(this.element);
+            this.element = null;
         }
     };
 
