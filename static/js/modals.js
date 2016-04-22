@@ -2,13 +2,14 @@ define(function (require) {
     'use strict';
 
     var modal = require('../plugin/modal');
+    var $ = require('jquery');
 
-    modal.live();
-    setTimeout(function () {
-        console.log('modal.die');
-        modal.die();
-    }, 10000);
+    var tmplModal = document.querySelector('#modal-example');
 
-    modal('button[data-toggle="modal-open"]');
-    //modal('a[data-toggle="modal-open"]');
+    var modalExample = modal(tmplModal.content.firstElementChild.cloneNode(true));
+
+    $('.btn').on('click', function (e) {
+        e.preventDefault();
+        modalExample.open();
+    });
 });

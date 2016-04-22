@@ -9,72 +9,43 @@ define(function (require, exports, module) {
             return new Modal(element, options);
         }
 
-        this.element = common.query(element);
-
-        if ($(this.element).data('instance-modal')) {
-            return $(this.element).data('instance-modal');
-        } else {
-            $(this.element).data('instance-modal', this);
+        if (!(element instanceof HTMLElement)) {
+            throw new TypeError('element参数应该是HTMLElement元素');
         }
 
-        this.target = this.getTarget();
-
-        if (!(options && options.slient)) {
-            $(this.element).on('click', this.show.bind(this));
-        }
+        document.body.appendChild(element);
+        this.element = element;
     }
 
     Modal.prototype = {
         constructor: Modal,
 
-        getTarget: function () {
-            var target = this.element.dataset.target;
-            if (!target) {
-                target = this.element.hash;
-            }
-            return common.query(target);
-        },
-
         getClose: function () {
-            return common.query('[data-toggle=modal-close]', this.target);
+            return common.query('[data-toggle=modal-close]', this.element);
         },
 
-        show: function show(e) {
-            if (e) {
-                e.preventDefault();
-            }
-            if (this.target.classList.contains('active')) {
+        open: function open() {
+            if (this.element.classList.contains('active')) {
                 return;
             }
-            this.target.classList.add('active');
-            $(this.getClose()).one('click', this.hide.bind(this));
+
+            this.element.classList.add('active');
+
+            $(this.getClose()).one('click.modal', this.close.bind(this));
         },
 
-        hide: function hide(e) {
+        close: function close(e) {
             if (e) {
                 e.preventDefault();
             }
-            if (this.target.classList.contains('active')) {
-                this.target.classList.remove('active');
-            }
+
+            this.element.classList.remove('active');
+        },
+
+        destory: function destroy() {
+            $(this.getClose()).off('click.modal');
+            document.body.removeChild(this.element);
         }
-    };
-
-    Modal.live = function live() {
-        Modal.die();
-
-        $(document).on('click.modal', '[data-toggle=modal-open]', function (e) {
-            e.preventDefault();
-
-            var model = new Modal(this, {
-                slient: true
-            });
-            model.show();
-        });
-    };
-
-    Modal.die = function die() {
-        $(document).off('click.modal');
     };
 
     module.exports = Modal;

@@ -12,8 +12,6 @@ Modal是常规化模态窗口组件，触发开关只是通常情况下一起使
 ### 构造函数
 `Modal(element, options)`;
 
-构造函数调用完成之后，直接open。
-
 `element`：传入要显示的modal元素，只接收`HTMLElement`类型，方便事件的传播。
 建议modal结构置于`template`元素中，用clone的方法生成。
 
