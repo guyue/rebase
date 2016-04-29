@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/karma start karma.unit.js"
   },
   "author": "",
   "license": "MIT",
@@ -26,8 +26,13 @@
     "spdy": "^3.2.0"
   },
   "devDependencies": {
-    "normalize.css": "^3.0.3",
+    "chai": "^3.5.0",
     "jquery": "^2.2.3",
+    "karma": "^0.13.22",
+    "karma-chrome-launcher": "^0.2.3",
+    "karma-mocha": "^0.2.2",
+    "mocha": "^2.4.5",
+    "normalize.css": "^3.0.3",
     "seajs": "^3.0.2",
     "seajs-text": "github:seajs/seajs-text"
   }
