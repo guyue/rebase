@@ -29,17 +29,9 @@
     <meta name="format-detection" content="telephone=no, address=no, email=no"/>
 
     <link rel="stylesheet" href="/sass/ratchet.css" />
-    <script src="lib/seajs/sea.js"></script>
-    <script src="lib/seajs-text/seajs-text.js"></script>
-    <script>
-        seajs.config({
-            base: '/js',
-            alias: {
-                'jquery': '/lib/jquery/jquery.js'
-            }
-        });
-        //seajs.use('main');
-    </script>
+    <script src="/lib/seajs/sea.js"></script>
+    <script src="/lib/seajs-text/seajs-text.js"></script>
+    <script src="/js/config.js"></script>
 </head>
 <body>
     <%- body %>
