@@ -18,19 +18,41 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
-            'lib/chai/chai.js',
-            'lib/seajs/sea.js',
-            'lib/seajs-text/seajs-text.js',
-            'js/config.js',
+            {
+                pattern: 'lib/chai/chai.js',
+                included: true,
+                watched: false
+            },
+            {
+                pattern: 'lib/seajs/sea.js',
+                included: true,
+                watched: false
+            },
+            {
+                pattern: 'lib/seajs-text/seajs-text.js',
+                included: true,
+                watched: false
+            },
+            {
+                pattern: 'js/config.js',
+                included: true,
+                watched: false
+            },
             {
                 pattern: 'lib/jquery/jquery.js',
-                included: false
+                included: false,
+                watched: false
             },
             {
                 pattern: 'plugin/**/*.js',
-                included: false
+                included: false,
+                watched: true
             },
-            'plugin/**/*.spec.js'
+            {
+                pattern: 'plugin/**/*.spec.js',
+                included: true,
+                watched: true
+            }
         ],
 
         // web server port
