@@ -15,10 +15,25 @@ describe('Modal Test Suite', function () {
 
     describe('Constructor', function () {
 
-        it('当传入的form参数无效时，将抛出错误', inject(function (Modal) {
+        it('使用new或函数的调用方式，都会返回Modal实例对象', inject(function (Modal) {
+            var element = document.createElement('div');
+            expect(new Modal(element)).to.be.an.instanceOf(Modal);
+            expect(Modal(element)).to.be.an.instanceOf(Modal);
+        }));
 
-            var foo = '1234';
-            expect(foo).to.be.a('string');
+        it('当传入的element参数无效时，将抛出错误', inject(function (Modal) {
+
+            expect(function () {
+                new Modal();
+            }).to.throw(TypeError);
+
+            expect(function () {
+                new Modal('.modal');
+            }).to.throw(TypeError);
+
+            expect(function () {
+                new Modal(document.querySelectorAll('.modal'));
+            }).to.throw(TypeError);
 
         }));
 
