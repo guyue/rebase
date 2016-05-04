@@ -5,7 +5,7 @@ describe('Modal Test Suite', function () {
 
     function inject(callback, isAysnc) {
         return function (done) {
-            seajs.use(['/plugin/modal'], function (Modal) {
+            seajs.use(['/plugin/modal', '/sass/ratchet.css'], function (Modal) {
 
                 if (isAysnc) {
                     callback(Modal, done);
@@ -18,21 +18,13 @@ describe('Modal Test Suite', function () {
         };
     }
 
-    var ratchet;
-
-    before(function () {
-        ratchet = document.createElement('link');
-        ratchet.rel = 'stylesheet';
-        ratchet.href = '/sass/ratchet.css';
-        document.head.appendChild(ratchet);
-    });
-
     after(function () {
-        if (ratchet.parentNode) {
+        var ratchet = document.querySelector('link[href$="/sass/ratchet.css"]');
+        if (ratchet && ratchet.parentNode) {
             ratchet.parentNode.removeChild(ratchet);
         }
-        ratchet = undefined;
     });
+
 
     describe('Constructor', function () {
 
@@ -61,8 +53,7 @@ describe('Modal Test Suite', function () {
     });
 
     describe('Modal.prototype', function () {
-        var modalElement,
-            transitionDuration;
+        var modalElement;
 
         beforeEach(function () {
             var div = document.createElement('div');
@@ -78,14 +69,7 @@ describe('Modal Test Suite', function () {
                     '</div>' +
                 '</div>';
             modalElement = div.firstElementChild;
-            [].slice.call(ratchet.sheet.cssRules).forEach(function (rule) {
-                if (rule.selectorText === '.modal') {
-                    // 此处不考虑单位，默认单位为s
-                    transitionDuration = parseFloat(rule.style.transitionDuration || rule.style.webkitTransitionDuration) * 1000 || 0;
-                    // 并默认 + 100s
-                    transitionDuration += 100;
-                }
-            });
+
         });
 
         afterEach(function () {
@@ -105,6 +89,16 @@ describe('Modal Test Suite', function () {
         }
 
         function asyncExpect(callback) {
+            var ratchet = document.querySelector('link[href$="/sass/ratchet.css"]');
+            var transitionDuration;
+            [].slice.call(ratchet.sheet.cssRules).forEach(function (rule) {
+                if (rule.selectorText === '.modal') {
+                    // 此处不考虑单位，默认单位为s
+                    transitionDuration = parseFloat(rule.style.transitionDuration || rule.style.webkitTransitionDuration) * 1000 || 0;
+                    // 并默认 + 100s
+                    transitionDuration += 100;
+                }
+            });
             setTimeout(callback, transitionDuration);
         }
 
