@@ -3,12 +3,17 @@ describe('Modal Test Suite', function () {
 
     var expect = chai.expect;
 
-    function inject(callback) {
+    function inject(callback, isAysnc) {
         return function (done) {
             seajs.use(['/plugin/modal'], function (Modal) {
-                callback(Modal);
 
-                done();
+                if (isAysnc) {
+                    callback(Modal, done);
+                } else {
+                    callback(Modal);
+                    done();
+                }
+
             });
         };
     }
@@ -56,7 +61,8 @@ describe('Modal Test Suite', function () {
     });
 
     describe('Modal.prototype', function () {
-        var modalElement;
+        var modalElement,
+            transitionDuration;
 
         beforeEach(function () {
             var div = document.createElement('div');
@@ -72,6 +78,14 @@ describe('Modal Test Suite', function () {
                     '</div>' +
                 '</div>';
             modalElement = div.firstElementChild;
+            [].slice.call(ratchet.sheet.cssRules).forEach(function (rule) {
+                if (rule.selectorText === '.modal') {
+                    // 此处不考虑单位，默认单位为s
+                    transitionDuration = parseFloat(rule.style.transitionDuration || rule.style.webkitTransitionDuration) * 1000 || 0;
+                    // 并默认 + 100s
+                    transitionDuration += 100;
+                }
+            });
         });
 
         afterEach(function () {
@@ -82,7 +96,7 @@ describe('Modal Test Suite', function () {
         });
 
         function isOpen() {
-            var style = window.getComputedStyle(document.querySelector('.modal'));
+            var style = window.getComputedStyle(modalElement);
             return modalElement.offsetTop === 0 &&
                 modalElement.offsetLeft === 0 &&
                 modalElement.offsetWidth === window.innerWidth &&
@@ -90,17 +104,62 @@ describe('Modal Test Suite', function () {
                 parseInt(style.opacity, 10) === 1;
         }
 
+        function asyncExpect(callback) {
+            setTimeout(callback, transitionDuration);
+        }
+
         describe('open', function () {
  
-            it('打开Modal弹层', inject(function (Modal) {
+            it('打开Modal弹层', inject(function (Modal, done) {
                 var modal = new Modal(modalElement);
                 modal.open();
-                expect(isOpen()).to.be.true;
-                //modal.close();
-                //modal.destroy();
-            }));
+                asyncExpect(function () {
+                    expect(isOpen()).to.be.true;
+                    done();
+                });
+            }, true));
  
         });
+
+        describe('close', function () {
+ 
+            it('关闭（隐藏）Modal弹层', inject(function (Modal, done) {
+                var modal = new Modal(modalElement);
+                modal.open();
+                asyncExpect(function () {
+                    expect(isOpen()).to.be.true;
+                    modal.close();
+                    asyncExpect(function () {
+                        expect(isOpen()).to.be.false;
+                        modal.open();
+                        asyncExpect(function () {
+                            expect(isOpen()).to.be.true;
+                            modal.close();
+                            asyncExpect(function () {
+                                expect(isOpen()).to.be.false;
+                                done();
+                            });
+                        });
+                    });
+                });
+            }, true));
+ 
+        });
+
+        describe('destroy', function () {
+ 
+            it('销毁Modal弹层', inject(function (Modal, done) {
+                var modal = new Modal(modalElement);
+                modal.destroy();
+                modal.open();
+                asyncExpect(function () {
+                    expect(isOpen()).to.be.false;
+                    done();
+                });
+            }, true));
+ 
+        });
+
     });
 
 });
