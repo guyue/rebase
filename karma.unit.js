@@ -19,6 +19,12 @@ module.exports = function (config) {
         // list of files / patterns to load in the browser
         files: [
             {
+                pattern: 'sass/*.scss',
+                included: false,
+                watched: true,
+                served: false
+            },
+            {
                 pattern: 'lib/chai/chai.js',
                 included: true,
                 watched: false
@@ -59,9 +65,15 @@ module.exports = function (config) {
         port: 8080,
 
         proxies: {
+            '/sass': {
+                'target': 'https://localhost:18080/sass',
+                'changeOrigin': true
+            },
             '/lib': '/base/lib',
             '/plugin': '/base/plugin'
         },
+
+        proxyValidateSSL: false,
 
         // level of logging
         // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
