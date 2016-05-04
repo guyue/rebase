@@ -36,6 +36,7 @@
     "normalize.css": "^3.0.3",
     "phantomjs-prebuilt": "^2.1.7",
     "seajs": "^3.0.2",
+    "seajs-css": "^1.0.5",
     "seajs-text": "github:seajs/seajs-text"
   }
 }

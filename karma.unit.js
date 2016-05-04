@@ -35,7 +35,7 @@ module.exports = function (config) {
                 watched: false
             },
             {
-                pattern: 'lib/seajs-text/seajs-text.js',
+                pattern: 'lib/seajs-css/seajs-css.js',
                 included: true,
                 watched: false
             },
