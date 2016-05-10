@@ -84,4 +84,12 @@ module.exports = {
             csrf: this.csrf,
         });
     },
+
+    sliders: function *() {
+        this.state.title = 'Sliders-REBASE';
+
+        yield this.render('sliders', {
+            csrf: this.csrf,
+        });
+    },
 };
