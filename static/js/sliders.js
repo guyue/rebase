@@ -1,5 +1,7 @@
 define(function (require) {
     'use strict';
 
-    console.log('sliders');
+    var common = require('../plugin/common');
+
+    console.log('sliders', common.browserCapabilities);
 });

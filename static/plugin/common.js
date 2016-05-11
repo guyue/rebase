@@ -29,4 +29,16 @@ define(function (require, exports, module) {
 
         return content.querySelector(selector);
     };
+
+    // 抄录自：https://davidwalsh.name/vendor-prefix
+    exports.browserCapabilities = (function () {
+        var styles = window.getComputedStyle(document.documentElement, '');
+        var text = styles.cssText || [].slice.call(styles).join(';');
+        var prefix = (text.match(/(moz|webkit|ms)/) || (styles.OLink === '' && ['', 'o']))[1];
+
+        return {
+            prefix: '-' + prefix + '-',
+            transform: prefix[0].toUpperCase() + prefix.substr(1) + 'Transform'
+        };
+    }());
 });
