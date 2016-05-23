@@ -1,7 +1,7 @@
 // 文字排版
 // ------------------------------
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, p {
     margin: 0;
     @include leader(1);
     @include trailer(1);
@@ -32,8 +32,6 @@ h6, .h6 {
 }
 
 p {
-    @include leader(1);
-    @include trailer(1);
     color: $text-color;
     text-align: justify;
 }
