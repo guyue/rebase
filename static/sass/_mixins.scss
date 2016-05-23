@@ -45,9 +45,9 @@
 }
 
 @mixin leader($multiple) {
-    margin-top: $line-height-default * $multiple;
+    margin-top: $line-height-default * round($multiple);
 }
 
 @mixin trailer($multiple) {
-    margin-bottom: $line-height-default * $multiple;
+    margin-bottom: $line-height-default * round($multiple);
 }
