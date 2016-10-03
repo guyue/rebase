@@ -1,9 +1,88 @@
+<style>
+.icon-container {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-align-content: flex-start;
+    -ms-flex-line-pack: start;
+    align-content: flex-start;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+}
+.icon-wrapper {
+    margin: 8px;
+    text-align: center;
+    -webkit-flex: 0 1 auto;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    -webkit-align-self: auto;
+    -ms-flex-item-align: auto;
+    align-self: auto;
+}
+</style>
 <header class="bar bar-nav">
-    <h1 class="title">LinearIcons</h1>
+    <h1 class="title">Svg Icons</h1>
 </header>
 
 <div class="content">
-    <% svgs.forEach(function (svg) { %>
-        <object data="/sass/svgs/<%= svg %>" class="icon"></object>
-    <% }); %>
+    <div class="content-padded">
+        <form id="frm-icon">
+            <select name="size">
+                <option value="14">小</option>
+                <option value="21" selected>中</option>
+                <option value="42">大</option>
+            </select>
+            <select name="color">
+                <option value="black" selected>黑</option>
+                <option value="red">红</option>
+                <option value="green">绿</option>
+                <option value="blue">蓝</option>
+            </select>
+        </form>
+ 
+        <div class="icon-container">
+            <% svgs.forEach(function (svg) { %>
+                <div class="icon-wrapper">
+                    <object data="/sass/svgs/<%= svg %>" class="icon"></object>
+                </div>
+            <% }); %>
+        </div>
+    </div>
 </div>
+<script>
+(function() {
+    'use strict';
+
+    var form = document.getElementById('frm-icon');
+
+    form.addEventListener('change', function () {
+        var icons = [].slice.call(document.querySelectorAll('.icon')),
+            size = this.elements['size'].value,
+            color = this.elements['color'].value;
+
+        icons.forEach(function (icon) {
+            icon.style.width = '' + size + 'px';
+            icon.style.height = '' + size + 'px';
+
+            var svg = icon.contentDocument.querySelector('svg'),
+                pathes = [].slice.call(svg.querySelectorAll('path'));
+
+            svg.style.width = '' + size + 'px';
+            svg.style.height = '' + size + 'px';
+            pathes.forEach(function (path) {
+                path.style.fill = color;
+            });
+        });
+    });
+}());
+</script>

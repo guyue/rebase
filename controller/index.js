@@ -24,7 +24,7 @@ module.exports = {
     },
 
     svgs: function *() {
-        this.state.title = 'REBASE';
+        this.state.title = 'Svg-Icon-REBASE';
 
         let svgs = yield getIcons();
         svgs = svgs.filter((svg) => {
@@ -42,7 +42,7 @@ module.exports = {
     },
 
     icons: function *() {
-        this.state.title = 'REBASE';
+        this.state.title = 'Font-Icon-REBASE';
 
         let icons = yield getIcons();
         icons = icons.filter((icon) => {

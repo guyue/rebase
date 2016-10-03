@@ -20,7 +20,7 @@
     align-items: flex-start;
 }
 .icon-wrapper {
-    padding: 10px;
+    margin: 8px;
     text-align: center;
     -webkit-flex: 0 1 auto;
     -ms-flex: 0 1 auto;
@@ -31,25 +31,23 @@
 }
 </style>
 <header class="bar bar-nav">
-    <h1 class="title">LinearIcons</h1>
+    <h1 class="title">Font Icons</h1>
 </header>
 
 <div class="content">
     <div class="content-padded">
-        <form id="frm-icon-size">
-            <fieldset>
-                <legend>调整Icon大小</legend>
-                <label><input type="radio" value="14" name="icon-size" />小</label>
-                <label><input type="radio" value="21" name="icon-size" checked />中</label>
-                <label><input type="radio" value="42" name="icon-size" />大</label>
-            </fieldset>
-            <fieldset>
-                <legend>调整Icon颜色</legend>
-                <label><input type="radio" value="black" name="icon-color" checked />黑</label>
-                <label><input type="radio" value="red" name="icon-color" />红</label>
-                <label><input type="radio" value="yellow" name="icon-color" />黄</label>
-                <label><input type="radio" value="blue" name="icon-color" />蓝</label>
-            </fieldset>
+        <form id="frm-icon">
+            <select name="size">
+                <option value="14">小</option>
+                <option value="21" selected>中</option>
+                <option value="42">大</option>
+            </select>
+            <select name="color">
+                <option value="black" selected>黑</option>
+                <option value="red">红</option>
+                <option value="green">绿</option>
+                <option value="blue">蓝</option>
+            </select>
         </form>
  
         <div class="icon-container">
@@ -65,16 +63,16 @@
 (function() {
     'use strict';
 
-    var form = document.getElementById('frm-icon-size');
+    var form = document.getElementById('frm-icon');
 
     form.addEventListener('change', function () {
         var icons = [].slice.call(document.querySelectorAll('.icon')),
-            fontSize = this.querySelector('input[type=radio][name=icon-size]:checked').value,
-            iconColor = this.querySelector('input[type=radio][name=icon-color]:checked').value;
+            size = this.elements['size'].value,
+            color = this.elements['color'].value;
 
         icons.forEach(function (icon) {
-            icon.style.fontSize = fontSize + 'px';
-            icon.style.color = iconColor;
+            icon.style.fontSize = size + 'px';
+            icon.style.color = color;
         });
     });
 }());
