@@ -6,6 +6,11 @@
     box-sizing: border-box;
 }
 
+blockquote {
+    -webkit-margin-start: 2em;
+    -webkit-margin-end: 2em;
+}
+
 // 通用链接样式
 a {
     color: $primary-color;
