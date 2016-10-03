@@ -30,39 +30,39 @@
 .btn-primary {
     color: $chrome-color;
     background-color: $primary-color;
-    border: 1px solid $primary-color;
+    border-color: $primary-color;
 
     &:active,
     &.active {
         color: $chrome-color;
         background-color: darken($primary-color, 10%);
-        border: 1px solid darken($primary-color, 10%);
+        border-color: darken($primary-color, 10%);
     }
 }
 
 .btn-positive {
     color: $chrome-color;
     background-color: $positive-color;
-    border: 1px solid $positive-color;
+    border-color: $positive-color;
 
     &:active,
     &.active {
         color: $chrome-color;
         background-color: darken($positive-color, 10%);
-        border: 1px solid darken($positive-color, 10%);
+        border-color: darken($positive-color, 10%);
     }
 }
 
 .btn-negative {
     color: $chrome-color;
     background-color: $negative-color;
-    border: 1px solid $negative-color;
+    border-color: $negative-color;
 
     &:active,
     &.active {
         color: $chrome-color;
         background-color: darken($negative-color, 10%);
-        border: 1px solid darken($negative-color, 10%);
+        border-color: darken($negative-color, 10%);
     }
 }
 
@@ -92,10 +92,9 @@
 }
 
 .btn-link {
-    padding-bottom: $button-font-size * .5;
     color: $primary-color;
     background-color: transparent;
-    border: 0;
+    border-color: transparent;
 
     &:active,
     &.active {
