@@ -3,6 +3,8 @@ const controller = require('../controller/index');
 
 
 router.get('/', controller.index);
+router.get('type', controller.type);
+router.get('svgs', controller.svgs);
 router.get('svgs', controller.svgs);
 router.get('icons', controller.icons);
 router.get('badges', controller.badges);

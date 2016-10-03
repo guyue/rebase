@@ -16,6 +16,13 @@ module.exports = {
         });
     },
 
+    type: function *() {
+        this.state.title = 'Type-REBASE';
+        yield this.render('type', {
+            csrf: this.csrf,
+        });
+    },
+
     svgs: function *() {
         this.state.title = 'REBASE';
 
