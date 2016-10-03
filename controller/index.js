@@ -10,21 +10,21 @@ function getIcons() {
 
 module.exports = {
     index: function *() {
-        this.state.title = 'REBASE';
+        this.state.title = 'Rebase';
         yield this.render('index', {
             csrf: this.csrf,
         });
     },
 
     type: function *() {
-        this.state.title = 'Type-REBASE';
+        this.state.title = 'Type';
         yield this.render('type', {
             csrf: this.csrf,
         });
     },
 
     svgs: function *() {
-        this.state.title = 'Svg-Icon-REBASE';
+        this.state.title = 'Svg Icon';
 
         let svgs = yield getIcons();
         svgs = svgs.filter((svg) => {
@@ -42,7 +42,7 @@ module.exports = {
     },
 
     icons: function *() {
-        this.state.title = 'Font-Icon-REBASE';
+        this.state.title = 'Font Icon';
 
         let icons = yield getIcons();
         icons = icons.filter((icon) => {
@@ -61,7 +61,7 @@ module.exports = {
     },
 
     badges: function *() {
-        this.state.title = 'Badges-REBASE';
+        this.state.title = 'Badges';
 
         yield this.render('badges', {
             csrf: this.csrf,
@@ -69,7 +69,7 @@ module.exports = {
     },
 
     buttons: function *() {
-        this.state.title = 'Buttons-REBASE';
+        this.state.title = 'Buttons';
 
         yield this.render('buttons', {
             csrf: this.csrf,
@@ -77,7 +77,7 @@ module.exports = {
     },
 
     forms: function *() {
-        this.state.title = 'Forms-REBASE';
+        this.state.title = 'Forms';
 
         yield this.render('forms', {
             csrf: this.csrf,
@@ -85,7 +85,7 @@ module.exports = {
     },
 
     modals: function *() {
-        this.state.title = 'Modals-REBASE';
+        this.state.title = 'Modals';
 
         yield this.render('modals', {
             csrf: this.csrf,
@@ -93,7 +93,7 @@ module.exports = {
     },
 
     sliders: function *() {
-        this.state.title = 'Sliders-REBASE';
+        this.state.title = 'Sliders';
 
         yield this.render('sliders', {
             csrf: this.csrf,
