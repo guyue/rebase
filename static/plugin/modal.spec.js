@@ -76,7 +76,7 @@ describe('Modal Test Suite', function () {
 
     describe('Constructor', function () {
 
-        it('使用new或函数的调用方式，都会返回Modal实例对象', inject(function (Modal) {
+        it('使用new或函数的调用方式，element参数应该是HTMLElement元素，都会返回Modal实例对象', inject(function (Modal) {
             var element = document.createElement('div');
             expect(new Modal(element)).to.be.an.instanceOf(Modal);
             expect(Modal(element)).to.be.an.instanceOf(Modal);
