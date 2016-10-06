@@ -30,9 +30,9 @@ define(function (require, exports, module) {
                 eventsApi(iteratee, events, names[i], name[names[i]], options);
             }
         } else if (name && eventSplitter.test(name)) {
-            for (names = name.split(eventSplitter); i < names.length; i += 1) {
-                events = iteratee(events, names[i], callback, options);
-            }
+            name.split(eventSplitter).forEach(function (n) {
+                events = iteratee(events, n, callback, options);
+            });
         } else {
             events = iteratee(events, name, callback, options);
         }
