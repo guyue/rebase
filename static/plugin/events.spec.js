@@ -144,4 +144,19 @@ describe('Event Test Suite', function () {
             }
         }, obj, context).trigger('a');
     }));
+
+
+    it('listenTo and stopListening', inject(function(Events) {
+        var a = Object.assign({name: 'a'}, Events);
+        var b = Object.assign({name: 'b'}, Events);
+        a.listenTo(b, 'all', function(){
+            expect(true).to.be.true;
+        });
+        b.trigger('anything');
+        a.listenTo(b, 'all', function(){
+            expect(true).to.be.false;
+        });
+        a.stopListening();
+        b.trigger('anything');
+    }));
 });
