@@ -16,9 +16,6 @@ define(function (require, exports, module) {
 
 
     function eventsApi(iteratee, events, name, callback, options) {
-        var i = 0,
-            names;
-
         if (name && typeof name === 'object') {
             if (callback !== undefined &&
                     options.hasOwnProperty('context') &&
@@ -26,9 +23,9 @@ define(function (require, exports, module) {
                 options.context = callback;
             }
 
-            for (names = Object.keys(name); i < names.length; i += 1) {
-                eventsApi(iteratee, events, names[i], name[names[i]], options);
-            }
+            Object.keys(name).forEach(function (n) {
+                events = eventsApi(iteratee, events, n, name[n], options);
+            });
         } else if (name && eventSplitter.test(name)) {
             name.split(eventSplitter).forEach(function (n) {
                 events = iteratee(events, n, callback, options);
