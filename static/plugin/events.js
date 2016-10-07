@@ -126,7 +126,10 @@ define(function (require, exports, module) {
                 delete listeners.listeningTo[listening.objId];
             }
 
-            return; // 这句话应该存在逻辑错误，如果在此刻跳出函数的话，事件绑定并没有被删除
+            // 下面这句return隐藏了一个操作
+            // 返回undefined值在eventsApi作为返回值，覆盖宿主对象的_events属性
+            // 达到删除_events对象的效果
+            return;
         }
 
         var names = name ? [name] : Object.keys(events);
