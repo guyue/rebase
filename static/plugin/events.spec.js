@@ -237,4 +237,19 @@ describe('Event Test Suite', function () {
         b.trigger('anything');
         expect(1).to.equal(counter);
     }));
+
+
+    it('listenTo, listenToOnce and stopListening', inject(function(Events) {
+        var a = Object.assign({}, Events);
+        var b = Object.assign({}, Events);
+        var counter = 0;
+        a.listenToOnce(b, 'all', function() { counter += 1; });
+        b.trigger('anything');
+        b.trigger('anything');
+        expect(1).to.equal(counter);
+        a.listenTo(b, 'all', function() { counter += 1; });
+        a.stopListening();
+        b.trigger('anything');
+        expect(1).to.equal(counter);
+    }));
 });
