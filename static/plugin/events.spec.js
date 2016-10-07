@@ -96,4 +96,31 @@ describe('Event Test Suite', function () {
     }));
 
 
+    it('binding and triggering multiple event names with event maps', inject(function(Events) {
+        var obj = {counter: 0};
+        Object.assign(obj, Events);
+
+        var increment = function() {
+            this.counter += 1;
+        };
+
+        obj.on({
+            'a b c': increment
+        });
+
+        obj.trigger('a');
+        expect(obj.counter).to.equal(1);
+
+        obj.trigger('a b');
+        expect(obj.counter).to.equal(3);
+
+        obj.trigger('c');
+        expect(obj.counter).to.equal(4);
+
+        obj.off({
+            'a c': increment
+        });
+        obj.trigger('a b c');
+        expect(obj.counter).to.equal(5);
+    }));
 });
