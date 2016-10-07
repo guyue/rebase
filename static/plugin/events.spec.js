@@ -123,4 +123,25 @@ describe('Event Test Suite', function () {
         obj.trigger('a b c');
         expect(obj.counter).to.equal(5);
     }));
+
+
+    it('binding and trigger with event maps context', inject(function(Events) {
+        var obj = {counter: 0};
+        var context = {};
+        Object.assign(obj, Events);
+
+        obj.on({
+            a: function() {
+                // 'defaults `context` to `callback` param'
+                expect(this).to.equal(context);
+            }
+        }, context).trigger('a');
+
+        obj.off().on({
+            a: function() {
+                // 'will not override explicit `context` param'
+                expect(this).to.equal(context);
+            }
+        }, obj, context).trigger('a');
+    }));
 });
