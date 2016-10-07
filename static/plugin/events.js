@@ -123,7 +123,7 @@ define(function (require, exports, module) {
             for (var i = 0, len = ids.length; i < len; i += 1) {
                 var listening = listeners[ids[i]];
                 delete listeners[listening.id];
-                delete listeners.listeningTo[listening.objId];
+                delete listening.listeningTo[listening.objId];
             }
 
             // 下面这句return隐藏了一个操作
