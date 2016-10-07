@@ -208,4 +208,18 @@ describe('Event Test Suite', function () {
         b.trigger('event2');
         expect(counter).to.equal(2);
     }));
+
+
+    it('listenToOnce', inject(function(Events) {
+        // Same as the previous test, but we use once rather than having to explicitly unbind
+        var obj = {counterA: 0, counterB: 0};
+        Object.assign(obj, Events);
+        var incrA = function(){ obj.counterA += 1; obj.trigger('event'); };
+        var incrB = function(){ obj.counterB += 1; };
+        obj.listenToOnce(obj, 'event', incrA);
+        obj.listenToOnce(obj, 'event', incrB);
+        obj.trigger('event');
+        expect(obj.counterA).to.equal(1);
+        expect(obj.counterB).to.equal(1);
+    }));
 });
