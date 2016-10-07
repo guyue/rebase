@@ -64,4 +64,36 @@ describe('Event Test Suite', function () {
     }));
 
 
+    it('binding and triggering with event maps', inject(function(Events) {
+        var obj = {counter: 0};
+        Object.assign(obj, Events);
+
+        function increment() {
+            this.counter += 1;
+        }
+
+        obj.on({
+            a: increment,
+            b: increment,
+            c: increment
+        });
+
+        obj.trigger('a');
+        expect(obj.counter).to.equal(1);
+
+        obj.trigger('a b');
+        expect(obj.counter).to.equal(3);
+
+        obj.trigger('c');
+        expect(obj.counter).to.equal(4);
+
+        obj.off({
+            a: increment,
+            c: increment
+        });
+        obj.trigger('a b c');
+        expect(obj.counter).to.equal(5);
+    }));
+
+
 });
