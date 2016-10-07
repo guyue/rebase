@@ -164,26 +164,48 @@ describe('Event Test Suite', function () {
     it('listenTo and stopListening with event maps', inject(function(Events) {
         var a = Object.assign({name: 'a'}, Events);
         var b = Object.assign({name: 'b'}, Events);
-        var count = 0;
+        var counter = 0;
         function cb(){
-            count += 1;
+            counter += 1;
         };
-        var count2 = 0;
+        var counter2 = 0;
         function cb2(){
-            count2 += 1;
+            counter2 += 1;
         };
         a.listenTo(b, {event: cb});
         b.trigger('event');
-        expect(count).to.equal(1);
+        expect(counter).to.equal(1);
         a.listenTo(b, {event2: cb2});
         b.on('event2', cb2);
         a.stopListening(b, {event2: cb2});
         b.trigger('event event2');
-        expect(count).to.equal(2);
-        expect(count2).to.equal(1);
+        expect(counter).to.equal(2);
+        expect(counter2).to.equal(1);
         a.stopListening();
         b.trigger('event event2');
-        expect(count).to.equal(2);
-        expect(count2).to.equal(2);
+        expect(counter).to.equal(2);
+        expect(counter2).to.equal(2);
+    }));
+
+
+    it('stopListening with omitted args', inject(function(Events) {
+        var a = Object.assign({name: 'a'}, Events);
+        var b = Object.assign({name: 'b'}, Events);
+        var counter = 0;
+        function cb() {
+            counter += 1;
+        }
+        a.listenTo(b, 'event', cb);
+        b.on('event', cb);
+        a.listenTo(b, 'event2', cb);
+        a.stopListening(null, {event: cb});
+        b.trigger('event event2');
+        expect(counter).to.equal(2);
+        b.off();
+        a.listenTo(b, 'event event2', cb);
+        a.stopListening(null, 'event');
+        a.stopListening();
+        b.trigger('event2');
+        expect(counter).to.equal(2);
     }));
 });
