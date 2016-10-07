@@ -252,4 +252,18 @@ describe('Event Test Suite', function () {
         b.trigger('anything');
         expect(1).to.equal(counter);
     }));
+
+
+    it('listenTo and stopListening with event maps', inject(function(Events) {
+        var a = Object.assign({}, Events);
+        var b = Object.assign({}, Events);
+        var counter = 0;
+        a.listenTo(b, {change: function(){ counter += 1; }});
+        b.trigger('change');
+        expect(counter).to.equal(1);
+        a.listenTo(b, {change: function(){ counter += 1; }});
+        a.stopListening();
+        b.trigger('change');
+        expect(counter).to.equal(1);
+    }));
 });
