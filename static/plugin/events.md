@@ -6,6 +6,36 @@
 复制[Backbone.Events](http://backbonejs.org/#Events)模块，作为其他插件类扩展的基类，使插件类具有基本的订阅发布能力，将open等相关事件直接绑定在插件对象上，是插件对象和其所使用的HTMLElement对象隔离。
 
 
+## Todo
+1. - [ ] 将ctx和context参数合并，目前存在的问题是ctx和context相互影响，如下例：
+	```javascript
+    it('default context is `this`', inject(function(Events) {
+        var obj = {counter: 0};
+        Object.assign(obj, Events);
+
+        function increment() {
+            this.counter += 1;
+        }
+
+        obj.on({
+            a: increment,
+            b: increment,
+            c: increment
+        });
+
+        obj.trigger('a b c');
+        expect(obj.counter).to.equal(3);
+
+        obj.off({
+            a: increment,
+            c: increment
+        }, obj);
+        obj.trigger('a b c');
+        expect(obj.counter).to.equal(4);
+    }));
+	```
+
+
 ## API
 Backbone.Events
 
