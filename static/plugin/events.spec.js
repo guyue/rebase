@@ -266,4 +266,13 @@ describe('Event Test Suite', function () {
         b.trigger('change');
         expect(counter).to.equal(1);
     }));
+
+
+    it('listenTo yourself', inject(function(Events) {
+        var e = Object.assign({}, Events);
+        var counter = 0;
+        e.listenTo(e, 'foo', function(){ counter += 1; });
+        e.trigger('foo');
+        expect(counter).to.equal(1);
+    }));
 });
