@@ -275,4 +275,130 @@ describe('Event Test Suite', function () {
         e.trigger('foo');
         expect(counter).to.equal(1);
     }));
+
+    it('listenTo yourself cleans yourself up with stopListening', inject(function(Events) {
+        var e = Object.assign({}, Events);
+        var counter = 0;
+        e.listenTo(e, 'foo', function(){ counter += 1; });
+        e.trigger('foo');
+        expect(counter).to.equal(1);
+        e.stopListening();
+        e.trigger('foo');
+        expect(counter).to.equal(1);
+    }));
+
+    describe('Cleans up references', function () {
+        function size(obj) {
+            if (!obj) {
+                return 0;
+            }
+
+            return Object.keys(obj).length;
+        }
+
+
+        it('stopListening cleans up references', inject(function(Events) {
+            var a = Object.assign({}, Events);
+            var b = Object.assign({}, Events);
+            var fn = function() {};
+            b.on('event', fn);
+            a.listenTo(b, 'event', fn).stopListening();
+            expect(size(a._listeningTo)).to.equal(0);
+            expect(size(b._events.event)).to.equal(1);
+            expect(size(b._listeners)).to.equal(0);
+            a.listenTo(b, 'event', fn).stopListening(b);
+            expect(size(a._listeningTo)).to.equal(0);
+            expect(size(b._events.event)).to.equal(1);
+            expect(size(b._listeners)).to.equal(0);
+            a.listenTo(b, 'event', fn).stopListening(b, 'event');
+            expect(size(a._listeningTo)).to.equal(0);
+            expect(size(b._events.event)).to.equal(1);
+            expect(size(b._listeners)).to.equal(0);
+            a.listenTo(b, 'event', fn).stopListening(b, 'event', fn);
+            expect(size(a._listeningTo)).to.equal(0);
+            expect(size(b._events.event)).to.equal(1);
+            expect(size(b._listeners)).to.equal(0);
+        }));
+
+
+        it('stopListening cleans up references from listenToOnce', inject(function(Events) {
+            var a = Object.assign({}, Events);
+            var b = Object.assign({}, Events);
+            var fn = function() {};
+            b.on('event', fn);
+            a.listenToOnce(b, 'event', fn).stopListening();
+            expect(size(a._listeningTo)).to.equal(0);
+            expect(size(b._events.event)).to.equal(1);
+            expect(size(b._listeners)).to.equal(0);
+            a.listenToOnce(b, 'event', fn).stopListening(b);
+            expect(size(a._listeningTo)).to.equal(0);
+            expect(size(b._events.event)).to.equal(1);
+            expect(size(b._listeners)).to.equal(0);
+            a.listenToOnce(b, 'event', fn).stopListening(b, 'event');
+            expect(size(a._listeningTo)).to.equal(0);
+            expect(size(b._events.event)).to.equal(1);
+            expect(size(b._listeners)).to.equal(0);
+            a.listenToOnce(b, 'event', fn).stopListening(b, 'event', fn);
+            expect(size(a._listeningTo)).to.equal(0);
+            expect(size(b._events.event)).to.equal(1);
+            expect(size(b._listeners)).to.equal(0);
+        }));
+
+
+        it('listenTo and off cleaning up references', inject(function(Events) {
+            var a = Object.assign({}, Events);
+            var b = Object.assign({}, Events);
+            var fn = function() {};
+            a.listenTo(b, 'event', fn);
+            b.off();
+            expect(size(a._listeningTo)).to.equal(0);
+            expect(size(b._listeners)).to.equal(0);
+            a.listenTo(b, 'event', fn);
+            b.off('event');
+            expect(size(a._listeningTo)).to.equal(0);
+            expect(size(b._listeners)).to.equal(0);
+            a.listenTo(b, 'event', fn);
+            b.off(null, fn);
+            expect(size(a._listeningTo)).to.equal(0);
+            expect(size(b._listeners)).to.equal(0);
+            a.listenTo(b, 'event', fn);
+            b.off(null, null, a);
+            expect(size(a._listeningTo)).to.equal(0);
+            expect(size(b._listeners)).to.equal(0);
+        }));
+
+
+        it('listenTo and stopListening cleaning up references', inject(function(Events) {
+            var a = Object.assign({}, Events);
+            var b = Object.assign({}, Events);
+            var fn = function() {};
+            a.listenTo(b, 'all', fn);
+            b.trigger('anything');
+            a.listenTo(b, 'other', fn);
+            a.stopListening(b, 'other');
+            a.stopListening(b, 'all');
+            expect(size(a._listeningTo)).to.equal(0);
+        }));
+
+
+        it('listenToOnce without context cleans up references after the event has fired', inject(function(Events) {
+            var a = Object.assign({}, Events);
+            var b = Object.assign({}, Events);
+            a.listenToOnce(b, 'all', function(){ });
+            b.trigger('anything');
+            expect(size(a._listeningTo)).to.equal(0);
+        }));
+
+
+        it('listenToOnce with event maps cleans up references', inject(function(Events) {
+            var a = Object.assign({}, Events);
+            var b = Object.assign({}, Events);
+            a.listenToOnce(b, {
+                one: function() { },
+                two: function() { }
+            });
+            b.trigger('one');
+            expect(size(a._listeningTo)).to.equal(1);
+        }));
+    });
 });
