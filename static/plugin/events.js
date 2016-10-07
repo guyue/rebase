@@ -206,9 +206,13 @@ define(function (require, exports, module) {
     function onceMap(map, name, callback, offer) {
         if (callback) {
             var once = map[name] = function () {
+                if (once._called) {
+                    return;
+                }
                 offer(name, callback);
                 // 作用域已经在triggerEvents中修正为this
                 callback.apply(this, arguments);
+                once._called = true;
             };
             once._callback = callback;
         }
