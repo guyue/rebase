@@ -222,4 +222,19 @@ describe('Event Test Suite', function () {
         expect(obj.counterA).to.equal(1);
         expect(obj.counterB).to.equal(1);
     }));
+
+
+    it('listenToOnce and stopListening', inject(function(Events) {
+        var a = Object.assign({}, Events);
+        var b = Object.assign({}, Events);
+        var counter = 0;
+        a.listenToOnce(b, 'all', function() { counter += 1; });
+        b.trigger('anything');
+        b.trigger('anything');
+        expect(1).to.equal(counter);
+        a.listenToOnce(b, 'all', function() { counter += 1; });
+        a.stopListening();
+        b.trigger('anything');
+        expect(1).to.equal(counter);
+    }));
 });
