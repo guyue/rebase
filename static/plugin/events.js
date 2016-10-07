@@ -69,7 +69,7 @@ define(function (require, exports, module) {
         });
 
         if (listening) {
-            var listeners = obj._listeners || (obj._listeners = []);
+            var listeners = obj._listeners || (obj._listeners = {});
             if (!listeners[listening.id]) {
                 listeners[listening.id] = listening;
             }
@@ -90,7 +90,7 @@ define(function (require, exports, module) {
         }
 
         var id = obj._listenId || (obj._listenId = uniqueId('l'));
-        var listeningTo = obj._listeningTo || (obj._listeningTo = {});
+        var listeningTo = this._listeningTo || (this._listeningTo = {});
         var listening = listeningTo[id];
 
         if (!listening) {
@@ -187,7 +187,7 @@ define(function (require, exports, module) {
             return;
         }
 
-        var ids = obj ? [ojb._listenId] : Object.keys(listeningTo);
+        var ids = obj ? [obj._listenId] : Object.keys(listeningTo);
 
         for (var i = 0; i < ids.length; i += 1) {
             var listening = listeningTo[ids[i]];
