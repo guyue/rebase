@@ -223,7 +223,7 @@ define(function (require, exports, module) {
 
     Events.once = function (name, callback, context) {
         var events = eventsApi(onceMap, {}, name, callback, this.off.bind(this));
-        if (typeof name === 'string' && !!context) {
+        if (typeof name === 'string' && !context) {
             callback = undefined;
         }
 
