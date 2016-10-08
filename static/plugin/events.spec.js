@@ -287,6 +287,150 @@ describe('Event Test Suite', function () {
         expect(counter).to.equal(1);
     }));
 
+
+    it('listenToOnce with event maps binds the correct `this`', inject(function(Events) {
+        var a = Object.assign({}, Events);
+        var b = Object.assign({}, Events);
+        a.listenToOnce(b, {
+            one: function() {
+                expect(this).to.equal(a);
+            },
+            two: function() { }
+        });
+        b.trigger('one');
+    }));
+
+
+    it("listenTo with empty callback doesn't throw an error", inject(function(Events) {
+        var e = Object.assign({}, Events);
+        e.listenTo(e, 'foo', null);
+        e.trigger('foo');
+        expect(true).to.be.true;
+    }));
+
+
+    it('trigger all for each event', inject(function(Events) {
+        var a, b, obj = {counter: 0};
+        Object.assign(obj, Events);
+        obj.on('all', function(event) {
+            obj.counter++;
+            if (event === 'a') a = true;
+            if (event === 'b') b = true;
+        }).trigger('a b');
+        expect(a).to.be.true;
+        expect(b).to.be.true;
+        expect(obj.counter).to.equal(2);
+    }));
+
+
+    it('on, then unbind all functions', inject(function(Events) {
+        var obj = {counter: 0};
+        Object.assign(obj, Events);
+        var callback = function() { obj.counter += 1; };
+        obj.on('event', callback);
+        obj.trigger('event');
+        obj.off('event');
+        obj.trigger('event');
+        expect(obj.counter).to.equal(1);
+    }));
+
+
+    it('bind two callbacks, unbind only one', inject(function(Events) {
+        var obj = {counterA: 0, counterB: 0};
+        Object.assign(obj, Events);
+        var callback = function() { obj.counterA += 1; };
+        obj.on('event', callback);
+        obj.on('event', function() { obj.counterB += 1; });
+        obj.trigger('event');
+        obj.off('event', callback);
+        obj.trigger('event');
+        expect(obj.counterA).to.equal(1);
+        expect(obj.counterB).to.equal(2);
+    }));
+
+
+    it('unbind a callback in the midst of it firing', inject(function(Events) {
+        var obj = {counter: 0};
+        Object.assign(obj, Events);
+        var callback = function() {
+            obj.counter += 1;
+            obj.off('event', callback);
+        };
+        obj.on('event', callback);
+        obj.trigger('event');
+        obj.trigger('event');
+        obj.trigger('event');
+        expect(obj.counter).to.equal(1);
+    }));
+
+
+    it('two binds that unbind themeselves', inject(function(Events) {
+        var obj = {counterA: 0, counterB: 0};
+        Object.assign(obj, Events);
+        var incrA = function(){ obj.counterA += 1; obj.off('event', incrA); };
+        var incrB = function(){ obj.counterB += 1; obj.off('event', incrB); };
+        obj.on('event', incrA);
+        obj.on('event', incrB);
+        obj.trigger('event');
+        obj.trigger('event');
+        obj.trigger('event');
+        expect(obj.counterA).to.equal(1);
+        expect(obj.counterB).to.equal(1);
+    }));
+
+
+    it('bind a callback with a default context when none supplied', inject(function(Events) {
+        var obj = Object.assign({
+            assertTrue: function() {
+                expect(this).to.equal(obj);
+            }
+        }, Events);
+
+        obj.once('event', obj.assertTrue);
+        obj.trigger('event');
+    }));
+
+
+    it('bind a callback with a supplied context', inject(function(Events) {
+        var TestClass = function() {
+            return this;
+        };
+        TestClass.prototype.assertTrue = function() {
+            expect(this).to.be.an.instanceof(TestClass);
+        };
+
+        var obj = Object.assign({}, Events);
+        obj.on('event', function() { this.assertTrue(); }, new TestClass);
+        obj.trigger('event');
+    }));
+
+
+    it('nested trigger with unbind', inject(function(Events) {
+        var obj = {counter: 0};
+        Object.assign(obj, Events);
+        var incr1 = function(){ obj.counter += 1; obj.off('event', incr1); obj.trigger('event'); };
+        var incr2 = function(){ obj.counter += 1; };
+        obj.on('event', incr1);
+        obj.on('event', incr2);
+        obj.trigger('event');
+        expect(obj.counter).to.equal(3);
+    }));
+
+
+    it('callback list is not altered during trigger', inject(function(Events) {
+        var counter = 0, obj = Object.assign({}, Events);
+        var incr = function(){ counter++; };
+        var incrOn = function(){ obj.on('event all', incr); };
+        var incrOff = function(){ obj.off('event all', incr); };
+
+        obj.on('event all', incrOn).trigger('event');
+        expect(counter).to.equal(0);
+
+        obj.off().on('event', incrOff).on('event all', incr).trigger('event');
+        expect(counter).to.equal(2);
+    }));
+
+
     describe('Cleans up references', function () {
         function size(obj) {
             if (!obj) {
