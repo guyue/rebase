@@ -9,7 +9,7 @@ define(function (require) {
 
     var modalExample = modal(nodeModal);
 
-    $(nodeModal).on('open', function (e) {
+    modalExample.on('open', function (e) {
         if (Math.round(Math.random())) {
             e.preventDefault();
             alert('Prevent you open the modal!!');

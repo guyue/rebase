@@ -160,7 +160,7 @@ describe('Modal Test Suite', function () {
         describe('open', function () {
             it('open方法执行后触发open事件', inject(function (Modal, done) {
                 var modal = new Modal(modalElement);
-                modalElement.addEventListener('open', function (e) {
+                modal.on('open', function (e) {
                     done();
                 }, false);
                 modal.open();
@@ -168,7 +168,7 @@ describe('Modal Test Suite', function () {
 
             it('阻止open事件，Modal不会打开', inject(function (Modal, done) {
                 var modal = new Modal(modalElement);
-                modalElement.addEventListener('open', function (e) {
+                modal.on('open', function (e) {
                     e.preventDefault();
                     expect(isOpen()).to.be.false;
                     done();
@@ -180,7 +180,7 @@ describe('Modal Test Suite', function () {
         describe('opened', function () {
             it('Modal窗口打开后会触发opened事件', inject(function (Modal, done) {
                 var modal = new Modal(modalElement);
-                modalElement.addEventListener('opened', function (e) {
+                modal.on('opened', function (e) {
                     done();
                 }, false);
                 modal.open();
@@ -190,7 +190,7 @@ describe('Modal Test Suite', function () {
         describe('close', function () {
             it('close方法执行后触发close事件', inject(function (Modal, done) {
                 var modal = new Modal(modalElement);
-                modalElement.addEventListener('close', function (e) {
+                modal.on('close', function (e) {
                     done();
                 }, false);
                 modal.open();
@@ -201,7 +201,7 @@ describe('Modal Test Suite', function () {
 
             it('阻止close事件，Modal不会关闭', inject(function (Modal, done) {
                 var modal = new Modal(modalElement);
-                modalElement.addEventListener('close', function (e) {
+                modal.on('close', function (e) {
                     e.preventDefault();
                     expect(isOpen()).to.be.true;
                     done();
@@ -216,7 +216,7 @@ describe('Modal Test Suite', function () {
         describe('closed', function () {
             it('Modal窗口关闭后会触发closed事件', inject(function (Modal, done) {
                 var modal = new Modal(modalElement);
-                modalElement.addEventListener('closed', function (e) {
+                modal.on('closed', function (e) {
                     done();
                 }, false);
                 modal.open();

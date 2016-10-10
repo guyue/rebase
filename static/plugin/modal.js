@@ -3,6 +3,7 @@ define(function (require, exports, module) {
 
     var $ = require('jquery'),
         common = require('./common'),
+        Events = require('./events'),
         CustomEvent = common.CustomEvent;
 
     function Modal(element, options) {
@@ -13,6 +14,8 @@ define(function (require, exports, module) {
         if (!(element instanceof HTMLElement)) {
             throw new TypeError('element参数应该是HTMLElement元素');
         }
+
+        Object.assign(this, Events);
 
         this.element = element;
         $(this.getClose()).on('click.modal', this.close.bind(this));
@@ -32,7 +35,7 @@ define(function (require, exports, module) {
                 canBubble: true,
                 cancelable: true
             });
-            this.element.dispatchEvent(event);
+            this.trigger(event.type, event);
             return event;
         },
 
@@ -74,6 +77,7 @@ define(function (require, exports, module) {
 
         destroy: function destroy() {
             $(this.getClose()).off('click.modal');
+            this.off();
             document.body.removeChild(this.element);
             this.element = null;
         }
