@@ -86,7 +86,7 @@ define(function (require, exports, module) {
 
     Events.listenTo = function (obj, name, callback) {
         if (!obj) {
-            return;
+            return this;
         }
 
         var id = obj._listenId || (obj._listenId = uniqueId('l'));
@@ -169,7 +169,7 @@ define(function (require, exports, module) {
 
     Events.off = function (name, callback, context) {
         if (!this._events) {
-            return;
+            return this;
         }
 
         this._events = eventsApi(offApi, this._events, name, callback, {
@@ -184,7 +184,7 @@ define(function (require, exports, module) {
     Events.stopListening = function (obj, name, callback) {
         var listeningTo = this._listeningTo;
         if (!listeningTo) {
-            return;
+            return this;
         }
 
         var ids = obj ? [obj._listenId] : Object.keys(listeningTo);
@@ -298,7 +298,7 @@ define(function (require, exports, module) {
 
     Events.trigger = function (name) {
         if (!this._events) {
-            return;
+            return this;
         }
 
         var args = [].slice.call(arguments, 1);
