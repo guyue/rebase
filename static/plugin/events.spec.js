@@ -431,6 +431,250 @@ describe('Event Test Suite', function () {
     }));
 
 
+    it('if no callback is provided, `on` is a noop', inject(function(Events) {
+        Object.assign({}, Events).on('test').trigger('test');
+    }));
+
+
+    it("#1282 - 'all' callback list is retrieved after each event.", inject(function(Events) {
+        var counter = 0;
+        var obj = Object.assign({}, Events);
+        var incr = function(){ counter++; };
+        obj.on('x', function() {
+            obj.on('y', incr).on('all', incr);
+        }).trigger('x y');
+        expect(counter).to.equal(2);
+    }));
+
+
+    it('if callback is truthy but not a function, `on` should throw an error just like jQuery', inject(function(Events) {
+        var view = Object.assign({}, Events).on('test', 'noop');
+        expect(function () {
+            view.trigger('test');
+        }).to.throw(Error);
+    }));
+
+
+    it('remove all events for a specific context', inject(function(Events) {
+        var obj = Object.assign({}, Events);
+        var counter = 0;
+        obj.on('x y all', function() { counter += 1; });
+        obj.on('x y all', function() { counter += 1; }, obj);
+        obj.off(null, null, obj);
+        obj.trigger('x y');
+        expect(counter).to.equal(4);
+    }));
+
+
+    it('remove all events for a specific callback', inject(function(Events) {
+        var obj = Object.assign({}, Events);
+        var counter = 0;
+        var success = function() { counter += 1; };
+        var fail = function() { counter += 1; };
+        obj.on('x y all', success);
+        obj.on('x y all', fail);
+        obj.off(null, fail);
+        obj.trigger('x y');
+        expect(counter).to.equal(4);
+    }));
+
+
+    it('event functions are chainable', inject(function(Events) {
+        var obj = Object.assign({}, Events);
+        var obj2 = Object.assign({}, Events);
+        var fn = function() {};
+        expect(obj.trigger('noeventssetyet')).to.equal(obj);
+        expect(obj.off('noeventssetyet')).to.equal(obj).to.equal(obj);
+        expect(obj.stopListening('noeventssetyet')).to.equal(obj);
+        expect(obj.on('a', fn)).to.equal(obj);
+        expect(obj.once('c', fn)).to.equal(obj);
+        expect(obj.trigger('a')).to.equal(obj);
+        expect(obj.listenTo(obj2, 'a', fn)).to.equal(obj);
+        expect(obj.listenToOnce(obj2, 'b', fn)).to.equal(obj);
+        expect(obj.off('a c')).to.equal(obj);
+        expect(obj.stopListening(obj2, 'a')).to.equal(obj);
+        expect(obj.stopListening()).to.equal(obj);
+    }));
+
+
+    it('#1310 - off does not skip consecutive events', inject(function(Events) {
+        var obj = Object.assign({}, Events);
+        obj.on('event', function() { expect(true).to.be.false; }, obj);
+        obj.on('event', function() { expect(true).to.be.false; }, obj);
+        obj.off(null, null, obj);
+        obj.trigger('event');
+    }));
+
+
+    it('#3448 - listenToOnce with space-separated events', inject(function(Events) {
+        var one = Object.assign({}, Events);
+        var two = Object.assign({}, Events);
+        var counter = 1;
+        one.listenToOnce(two, 'x y', function(n) {
+            expect(n).to.equal(counter++);
+        });
+        two.trigger('x', 1);
+        two.trigger('x', 1);
+        two.trigger('y', 2);
+        two.trigger('y', 2);
+    }));
+
+
+    describe('Once', function () {
+        it('once', inject(function(Events) {
+            // Same as the previous test, but we use once rather than having to explicitly unbind
+            var obj = {counterA: 0, counterB: 0};
+            Object.assign(obj, Events);
+            var incrA = function(){ obj.counterA += 1; obj.trigger('event'); };
+            var incrB = function(){ obj.counterB += 1; };
+            obj.once('event', incrA);
+            obj.once('event', incrB);
+            obj.trigger('event');
+            expect(obj.counterA).to.equal(1);
+            expect(obj.counterB).to.equal(1);
+        }));
+ 
+ 
+        it('once variant one', inject(function(Events) {
+            var f = function(){ expect(true).to.be.true; };
+ 
+            var a = Object.assign({}, Events).once('event', f);
+            var b = Object.assign({}, Events).on('event', f);
+ 
+            a.trigger('event');
+ 
+            b.trigger('event');
+            b.trigger('event');
+        }));
+ 
+ 
+        it('once variant two', inject(function(Events) {
+            var f = function(){ expect(true).to.be.true; };
+            var obj = Object.assign({}, Events);
+ 
+            obj.once('event', f).on('event', f).trigger('event').trigger('event');
+        }));
+ 
+ 
+        it('once with off', inject(function(Events) {
+            var f = function(){ expect(true).to.be.false; };
+            var obj = Object.assign({}, Events);
+ 
+            obj.once('event', f);
+            obj.off('event', f);
+            obj.trigger('event');
+        }));
+
+
+        it('once with event maps', inject(function(Events) {
+            var obj = {counter: 0};
+            Object.assign(obj, Events);
+ 
+            var increment = function() {
+                this.counter += 1;
+            };
+ 
+            obj.once({
+                a: increment,
+                b: increment,
+                c: increment
+            }, obj);
+ 
+            obj.trigger('a');
+            expect(obj.counter).to.equal(1);
+ 
+            obj.trigger('a b');
+            expect(obj.counter).to.equal(2);
+ 
+            obj.trigger('c');
+            expect(obj.counter).to.equal(3);
+ 
+            obj.trigger('a b c');
+            expect(obj.counter).to.equal(3);
+        }));
+
+
+        it('bind a callback with a supplied context using once with object notation', inject(function(Events) {
+            var obj = {counter: 0};
+            var context = {};
+            Object.assign(obj, Events);
+ 
+            obj.once({
+                a: function() {
+                    expect(this).to.equal(context);
+                }
+            }, context).trigger('a');
+        }));
+ 
+
+        it('once with off only by context', inject(function(Events) {
+            var context = {};
+            var obj = Object.assign({}, Events);
+            obj.once('event', function(){ expect(true).to.be.false; }, context);
+            obj.off(null, null, context);
+            obj.trigger('event');
+        }));
+
+
+        it('once with asynchronous events', inject(function(Events, done) {
+            var func = function () {
+                return setTimeout(function() {
+                    expect(true).to.be.true;
+                    done();
+                }, 50);
+            };
+            var obj = Object.assign({}, Events).once('async', func);
+ 
+            obj.trigger('async');
+            obj.trigger('async');
+        }, true));
+
+
+        it('once with multiple events.', inject(function(Events) {
+            var obj = Object.assign({}, Events);
+            var counter = 0;
+            obj.once('x y', function() { counter += 1; });
+            obj.trigger('x y');
+            expect(counter).to.equal(2);
+        }));
+
+
+        it('Off during iteration with once.', inject(function(Events) {
+            var obj = Object.assign({}, Events);
+            var counter = 0;
+            var f = function(){ this.off('event', f); };
+            obj.on('event', f);
+            obj.once('event', function(){ counter += 1;});
+            obj.on('event', function(){ counter += 1; });
+ 
+            obj.trigger('event');
+            obj.trigger('event');
+            expect(counter).to.equal(3);
+        }));
+
+        it('`once` on `all` should work as expected', inject(function(Events) {
+            var obj = Object.assign({}, Events);
+            var counter = 0;
+            obj.once('all', function() {
+                counter += 1;
+                obj.trigger('all');
+            });
+            obj.trigger('all');
+            expect(counter).to.equal(1);
+        }));
+
+
+        it('once without a callback is a noop', inject(function(Events) {
+            Object.assign({}, Events).once('event').trigger('event');
+        }));
+
+        it('listenToOnce without a callback is a noop', inject(function(Events) {
+            var obj = Object.assign({}, Events);
+            obj.listenToOnce(obj, 'event').trigger('event');
+        }));
+    });
+
+
     describe('Cleans up references', function () {
         function size(obj) {
             if (!obj) {
