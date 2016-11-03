@@ -6,7 +6,7 @@ define(function (require) {
     var sliderExample = slider(document.querySelector('#slider-example'));
     sliderExample.on('slidestart', function (e) {
         if (Math.random() > 0.5) {
-            //e.preventDefault();
+            e.preventDefault();
             console.log(e.type, 'prevented');
         } else {
             console.log(e.type);
