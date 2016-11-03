@@ -32,8 +32,8 @@ define(function (require, exports, module) {
         this.offsetX = this.getTranslate();
 
         element.addEventListener('touchstart', this.touchStart.bind(this), false);
-        element.addEventListener('touchmove', this.touchMove.bind(this), false);
-        element.addEventListener('touchend', this.touchEnd.bind(this), false);
+        this.ontouchmove = this.touchMove.bind(this);
+        this.ontouchend = this.touchEnd.bind(this);
     }
 
     Slider.prototype = {
@@ -87,6 +87,18 @@ define(function (require, exports, module) {
             }
         },
 
+        bindEvent: function () {
+            this.element.addEventListener('touchmove', this.ontouchmove, false);
+            this.element.addEventListener('touchend', this.ontouchend, false);
+            this.element.addEventListener('touchcancel', this.ontouchend, false);
+        },
+
+        unbindEvent: function () {
+            this.element.removeEventListener('touchmove', this.ontouchmove, false);
+            this.element.removeEventListener('touchend', this.ontouchend, false);
+            this.element.removeEventListener('touchcancel', this.ontouchend, false);
+        },
+
         touchStart: function touchStart(e) {
             var slideStartEvent = this.dispatchEvent('slidestart');
 
@@ -104,6 +116,7 @@ define(function (require, exports, module) {
 
             this.setSlideNumber(0);
 
+            this.bindEvent();
             this.dispatchEvent('slidestarted');
         },
 
@@ -162,6 +175,7 @@ define(function (require, exports, module) {
             this.offsetX = this.slideNumber * this.slideWidth;
             this.setTranslate(this.offsetX, '.2');
 
+            this.unbindEvent();
             this.dispatchEvent('slideended', {
                 detail: {slideNumber: Math.abs(this.slideNumber)},
             });
