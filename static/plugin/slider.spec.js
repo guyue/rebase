@@ -51,9 +51,8 @@ describe('Slider Test Suite', function () {
     describe('Constructor', function () {
 
         it('使用new或函数的调用方式，element参数应该是HTMLElement元素，都会返回Slider实例对象', inject(function (Slider) {
-            var element = document.createElement('div');
-            expect(new Slider(element)).to.be.an.instanceOf(Slider);
-            expect(Slider(element)).to.be.an.instanceOf(Slider);
+            expect(new Slider(sliderElement)).to.be.an.instanceOf(Slider);
+            expect(Slider(sliderElement)).to.be.an.instanceOf(Slider);
         }));
 
         it('当传入的element参数无效时，将抛出错误', inject(function (Slider) {
@@ -68,6 +67,24 @@ describe('Slider Test Suite', function () {
 
             expect(function () {
                 new Slider(document.querySelectorAll('.slider'));
+            }).to.throw(TypeError);
+
+        }));
+
+        it('当传入的element不包含.slide-group，将抛出错误', inject(function (Slider) {
+            var element = document.createElement('div');
+
+            expect(function () {
+                new Slider(element);
+            }).to.throw(TypeError);
+
+        }));
+
+        it('当传入的element不包含.slide，将抛出错误', inject(function (Slider) {
+            var element = document.createElement('div');
+
+            expect(function () {
+                new Slider(element);
             }).to.throw(TypeError);
 
         }));
