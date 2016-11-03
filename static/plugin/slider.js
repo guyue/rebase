@@ -31,9 +31,10 @@ define(function (require, exports, module) {
         this.browserPrefix = common.browserCapabilities.prefix;
         this.offsetX = this.getTranslate();
 
-        element.addEventListener('touchstart', this.touchStart.bind(this), false);
+        this.ontouchstart = this.touchStart.bind(this);
         this.ontouchmove = this.touchMove.bind(this);
         this.ontouchend = this.touchEnd.bind(this);
+        element.addEventListener('touchstart', this.ontouchstart, false);
     }
 
     Slider.prototype = {
@@ -162,8 +163,8 @@ define(function (require, exports, module) {
             this.startedMoving = false;
             var offset = 0;
             if (Date.now() - this.startTime < 1000 && Math.abs(this.deltaX) > 15) {
-                // 自右向左滑动时，deltaX小于0，向后快速滚动1屏；
-                // 自左向右滑动时，deltaX大于0，向前快速滚动1屏；
+                // 自右向左滑动时，deltaX小于0，向后快速滚动1帧；
+                // 自左向右滑动时，deltaX大于0，向前快速滚动1帧；
                 if (this.deltaX < 0) {
                     offset = - 1;
                 } else {
@@ -179,6 +180,13 @@ define(function (require, exports, module) {
             this.dispatchEvent('slideended', {
                 detail: {slideNumber: Math.abs(this.slideNumber)},
             });
+        },
+
+        destroy: function () {
+            this.off();
+            this.element.removeEventListener('touchstart', this.ontouchstart, false);
+            this.unbindEvent();
+            this.element = null;
         }
     };
 
