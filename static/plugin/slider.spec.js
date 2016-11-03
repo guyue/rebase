@@ -75,20 +75,13 @@ describe('Slider Test Suite', function () {
     });
 
     describe('Slider.prototype', function () {
-        describe('getSlider', function () {
-            it('should get the parent element', inject(function (Slider) {
-                var slide = sliderElement.querySelector('.slide');
-                expect(Slider.prototype.getSlider(slide)).to.equal(sliderElement.firstElementChild);
-            }));
-        });
-
-        describe('getScroll', function () {
+        describe('getTranslate', function () {
             it('should get the scroll x', inject(function (Slider) {
                 var sliderGroup = sliderElement.querySelector('.slide-group');
                 ['MozTransform', 'MsTransform', 'WebkitTransform', 'transform'].forEach(function (transform) {
                     sliderGroup.style[transform] = 'translate3d(20px, 0, 0)';
                 });
-                expect(new Slider(sliderElement).getScroll()).to.equal(20);
+                expect(new Slider(sliderElement).getTranslate()).to.equal(20);
             }));
         });
     });
