@@ -106,7 +106,7 @@ define(function (require, exports, module) {
                 return;
             }
 
-            this.isScrolling = false;
+            this.isScrolling = undefined;
             this.resistance = 1;
             this.startTime = Date.now();
             this.pageX = e.touches[0].pageX;
@@ -138,7 +138,7 @@ define(function (require, exports, module) {
             this.pageX = touches[0].pageX;
             this.pageY = touches[0].pageY;
 
-            if (!this.isScrolling && this.startedMoving) {
+            if (typeof this.isScrolling === 'undefined' && this.startedMoving) {
                 this.isScrolling = Math.abs(this.deltaY) > Math.abs(this.deltaX);
             }
 
