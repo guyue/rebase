@@ -92,8 +92,15 @@ describe('Slider Test Suite', function () {
     });
 
     describe('Slider.prototype', function () {
+        describe('setTranslate', function () {
+            it('should set the translate x', inject(function (Slider) {
+                var slider = new Slider(sliderElement);
+                slider.setTranslate(20);
+                expect(slider.getTranslate()).to.equal(20);
+            }));
+        });
         describe('getTranslate', function () {
-            it('should get the scroll x', inject(function (Slider) {
+            it('should get the translate x', inject(function (Slider) {
                 var sliderGroup = sliderElement.querySelector('.slide-group');
                 ['MozTransform', 'MsTransform', 'WebkitTransform', 'transform'].forEach(function (transform) {
                     sliderGroup.style[transform] = 'translate3d(20px, 0, 0)';
