@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var common = require('../plugin/common');
+    var slider = require('../plugin/slider');
 
-    console.log('sliders', common.browserCapabilities);
+    slider(document.querySelector('#slider-example'));
 });
