@@ -69,6 +69,10 @@ module.exports = function (config) {
                 'target': 'https://localhost:18080/sass',
                 'changeOrigin': true
             },
+            '/image': {
+                'target': 'https://localhost:18080/image',
+                'changeOrigin': true
+            },
             '/lib': '/base/lib',
             '/plugin': '/base/plugin'
         },
